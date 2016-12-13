@@ -215,6 +215,22 @@ describe('Board', function() {
       expect ( mockBoard.getStatus()).toEqual("X");
     });
 
+    it('indicates the winner if a player has won (3 marks in a row)', function() {
+      var mockBoard = new Board();
+      mockBoard.setMarkAtPosition(0,0, 'O');
+      mockBoard.setMarkAtPosition(0,1, 'O');
+      mockBoard.setMarkAtPosition(0,2, 'O');
+      expect ( mockBoard.getStatus()).toEqual("O");
+    });
+
+    it('indicates the winner if a player has won (3 marks in a column)', function() {
+      var mockBoard = new Board();
+      mockBoard.setMarkAtPosition(0,0, 'O');
+      mockBoard.setMarkAtPosition(1,0, 'O');
+      mockBoard.setMarkAtPosition(2,0, 'O');
+      expect ( mockBoard.getStatus()).toEqual("O");
+    });
+
     it('returns undefined if a player has not yet won', function() {
       var mockBoard = new Board();
       mockBoard.setMarkAtPosition(0,0, 'X');
