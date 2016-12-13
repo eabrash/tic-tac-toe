@@ -1,7 +1,7 @@
 
 var Game = function() {
 	this.winStatus = "in progress";
-	// this.board = new Board;
+	// this.board = new Board();
 };
 
 Game.prototype.checkWinStatus = function() {
