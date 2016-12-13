@@ -31,43 +31,7 @@ Game.prototype.setPlayers = function(player1, player2) {
 };
 
 
-var Player = function() {
-};
 
-Player.prototype.namePlayer = function(name) {
-	this.name = name;
-};
 
-Player.prototype.setMark = function( mark ) {
-	this.mark = mark;
-};
+export default Game;
 
-Player.prototype.getMark = function() {
-	return this.mark;
-};
-
-Player.prototype.chooseSquare = function() {
-
-};
-
-Player.prototype.setStatus = function(status) {
-	this.status = status;
-};
-
-Player.prototype.getStatus = function() {
-	return this.status;
-};
-
-//Board
-
-var Board = function() {
-
-};
-
-//ScoreBoard
-
-var ScoreBoard = function() {
-
-};
-
-module.exports = Game, Player, Board, ScoreBoard;
