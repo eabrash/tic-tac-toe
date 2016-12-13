@@ -9,6 +9,9 @@ describe("Game", function() {
   var testPlayerOne = "Sassa";
   var testPlayerTwo = "Emily";
 
+  // var testPlayerOne = "Sassa";
+  // var testPlayerTwo = "Emily";
+
   it('should show that a game has a Board', function() {
   	expect(Array.isArray(testGame.board.board)).toEqual(true);
   });
@@ -107,16 +110,14 @@ describe("Player", function() {
       expect( function() { mockPlayer.setName(""); } ).toThrow(42);
     });
 
-  });
+  }); // END setName
 
   describe('getMark', function() {
-
     it('querying a new Player mark should return an empty string', function() {
       var mockPlayer = new Player();
       expect (mockPlayer.getMark()).toEqual("");
     });
-
-  });
+  }); // END getMark
 
   describe('setMark', function() {
 
@@ -137,7 +138,7 @@ describe("Player", function() {
       expect( function() { mockPlayer.setMark("Q"); } ).toThrow(42);
     });
 
-  });
+  }); // END setMark
 
   describe('getStatus', function() {
 
@@ -146,7 +147,7 @@ describe("Player", function() {
       expect (mockPlayer.getStatus()).toEqual("inactive");
     });
 
-  });
+  }); // END getStatus
 
   describe('setStatus', function() {
 
@@ -167,8 +168,25 @@ describe("Player", function() {
       expect( function() { mockPlayer.setStatus("hAppY!"); } ).toThrow(42);
     });
 
-  });
+  }); //END setStatus
 
+  describe('chooseSquare', function() {
+  	it('player can set a square', function() {
+	  	var mockBoard = new Board();
+	  	var mockPlayer = new Player();
+	  	mockPlayer.setMark("X");
+	  	mockPlayer.chooseSquare(mockBoard, 0,1);
+	  	expect( mockBoard.board[0][1]).toEqual("X");
+  	});
+
+  	it('player can set a square', function() {
+	  	var mockBoard = new Board();
+	  	var mockPlayer = new Player();
+	  	mockPlayer.setMark("X");
+	  	mockPlayer.chooseSquare(mockBoard, 0,1);
+	  	expect( function() { mockPlayer.chooseSquare(mockBoard, 0,1); } ).toThrow("Try Again!");
+  	});
+  }); // END chooseSquare
 });
 
 // BOARD TESTS
