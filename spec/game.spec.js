@@ -17,10 +17,15 @@ describe("Game", function() {
 
   });
 
-  describe('getCurrentPlayer', function(){
+  describe('setCurrentPlayer', function(){
 
-    xit('should return the current player', function(){
-      expect(testGame.getCurrentPlayer()).toEqual("in progress");
+    it('should set current player and return the current player (set to Emily)', function(){
+    	testGame.setCurrentPlayer(testPlayerTwo);
+      expect(testGame.getCurrentPlayer()).toEqual('Emily');
+    });
+
+    it('setting the current player as nil should throw an error', function(){
+      expect( function() { testGame.setCurrentPlayer(""); } ).toThrow(42);
     });
 
   });
