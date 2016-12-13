@@ -189,7 +189,21 @@ describe('Board', function() {
       var mockBoard = new Board();
       expect( function() { mockBoard.setMarkAtPosition(0,-1, "O"); } ).toThrow("Try Again!");
     });
-	
+
 	}); //END DESCRIBE setMarkAtPosition
 
-}) // END DESCRIBE BOARD
+  describe('getMarkAtPosition', function() {
+		it('get the mark found at a given position (position is valid)', function() {
+			var mockBoard = new Board();
+			mockBoard.setMarkAtPosition(0,0, 'X');
+			expect ( mockBoard.getMarkAtPosition(0,0)).toEqual("X");
+		});
+
+    it('get the mark found at a given position (position is NOT valid)', function() {
+      var mockBoard = new Board();
+      mockBoard.setMarkAtPosition(0,0, 'X');
+      expect( function() { mockBoard.getMarkAtPosition(0,-1); } ).toThrow("Spot Does Not Exist!");
+    });
+  });
+
+}); // END DESCRIBE BOARD
