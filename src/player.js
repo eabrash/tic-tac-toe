@@ -4,18 +4,28 @@
 
 var Player = function() {
 	this.name = '';
+	this.mark = '';
+	this.status = 'inactive';
 };
 
 Player.prototype.getName = function() {
 	return this.name;
 };
 
-Player.prototype.namePlayer = function(name) {
-	this.name = name;
+Player.prototype.setName = function(name) {
+	if (name == "") {
+		throw 42
+	} else {
+		this.name = name;
+	};
 };
 
 Player.prototype.setMark = function( mark ) {
-	this.mark = mark;
+	if (mark != "X" && mark != "O" && mark != "x" && mark != "o") {
+		throw 42
+	} else {
+		this.mark = mark.toUpperCase();
+	};
 };
 
 Player.prototype.getMark = function() {
@@ -30,7 +40,11 @@ Player.prototype.chooseSquare = function() {
 // shows whether a player is active and can choose a square or not
 
 Player.prototype.setStatus = function(status) {
-	this.status = status;
+	if (status.toLowerCase() != "active" && status.toLowerCase() != "inactive") {
+		throw 42
+	} else {
+	this.status = status.toLowerCase();
+	}
 };
 
 Player.prototype.getStatus = function() {
