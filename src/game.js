@@ -1,13 +1,22 @@
+import Board from 'board';
+import Player from 'player';
 
 var Game = function() {
 	this.winStatus = "in progress";
-	// this.board = new Board();
+	this.board = new Board();
 };
 
 Game.prototype.checkWinStatus = function() {
 	//will involve logic and Board and choosing Squares etc etc
+	if (this.board.getStatus() == "X" || this.board.getStatus() =="O") {
+		this.winStatus = this.board.getStatus(); 
+		return this.winStatus + " " + "won!";
+	} else if (this.board.playCounter == 9) {
+		this.winStatus = "draw";
+	};
+	
 	return this.winStatus;
-};
+}; // END checkWinStatus
 
 Game.prototype.getCurrentPlayer = function() {
 	return this.currentPlayer;
