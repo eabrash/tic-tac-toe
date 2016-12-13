@@ -1,7 +1,7 @@
 import Game from 'game';
-import Player from 'game';
-import Board from 'game';
-import ScoreBoard from 'game';
+import Player from 'player';
+import Board from 'board';
+import ScoreBoard from 'scoreboard';
 
 describe("Game", function() {
 
@@ -41,5 +41,10 @@ describe("Game", function() {
 });
 
 describe("Player", function() {
+
+	it('querying a new Player name should return an empty string', function() {
+		var mockPlayer = new Player();
+		expect (mockPlayer.getName()).toEqual("");
+	});
 
 });
