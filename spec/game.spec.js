@@ -127,3 +127,69 @@ describe("Player", function() {
   });
 
 });
+
+// BOARD TESTS
+
+describe('Board', function() {
+	it('the Board should have a board attribute that is an array', function() {
+		var mockBoard = new Board();
+		expect ( Array.isArray(mockBoard.board) ).toEqual(true);
+	});
+
+	it('the Board should have a board attribute that is an array of arrays', function() {
+		var mockBoard = new Board();
+		expect ( Array.isArray(mockBoard.board[0]) ).toEqual(true);
+	});
+
+	it('the Board board outer array should have a length of 3', function() {
+		var mockBoard = new Board();
+		expect ( mockBoard.board.length ).toEqual(3);
+	});
+
+	it('the board attribute array of arrays start out as null', function() {
+		var mockBoard = new Board();
+		expect ( mockBoard.board[0][0] ).toEqual(null);
+	});
+
+	it('the Board board inner arrays each should have a length of 3', function() {
+		var mockBoard = new Board();
+		expect ( mockBoard.board[0].length ).toEqual(3);
+	});
+
+	describe('setMarkAtPosition', function() {
+		it('setting a mark at a give spot should make it have the mark', function() {
+			var mockBoard = new Board();
+			mockBoard.setMarkAtPosition(0,0, 'X');
+			expect ( mockBoard.board[0][0] ).toEqual("X");
+		});
+
+		it('setting a mark on space that already has a mark should tell you to try again', function(){
+      var mockBoard = new Board();
+			mockBoard.setMarkAtPosition(0,0, 'X');
+			//syntax is setMarkAtPosition(row, column, mark)
+      expect( function() { mockBoard.setMarkAtPosition(0,0, "O"); } ).toThrow("Try Again!");
+    });
+
+    it('going out of bounds should throw an error (row index too big)', function(){
+      var mockBoard = new Board();
+      expect( function() { mockBoard.setMarkAtPosition(3,0, 'X'); } ).toThrow("Try Again!");
+    });
+
+    it('going out of bounds should throw an error (row index too small)', function(){
+      var mockBoard = new Board();
+      expect( function() { mockBoard.setMarkAtPosition(-1,0, "O"); } ).toThrow("Try Again!");
+    });
+
+    it('going out of bounds should throw an error (column index too big)', function(){
+      var mockBoard = new Board();
+      expect( function() { mockBoard.setMarkAtPosition(0, 3, "O"); } ).toThrow("Try Again!");
+    });
+
+    it('going out of bounds should throw an error (column index too small)', function(){
+      var mockBoard = new Board();
+      expect( function() { mockBoard.setMarkAtPosition(0,-1, "O"); } ).toThrow("Try Again!");
+    });
+	
+	}); //END DESCRIBE setMarkAtPosition
+
+}) // END DESCRIBE BOARD
