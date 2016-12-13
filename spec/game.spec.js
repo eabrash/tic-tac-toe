@@ -206,4 +206,20 @@ describe('Board', function() {
     });
   });
 
+  describe('getStatus', function() {
+    it('indicates the winner if a player has won (3 marks in a row - diagonal L to R)', function() {
+      var mockBoard = new Board();
+      mockBoard.setMarkAtPosition(0,0, 'X');
+      mockBoard.setMarkAtPosition(1,1, 'X');
+      mockBoard.setMarkAtPosition(2,2, 'X');
+      expect ( mockBoard.getStatus()).toEqual("X");
+    });
+
+    it('returns undefined if a player has not yet won', function() {
+      var mockBoard = new Board();
+      mockBoard.setMarkAtPosition(0,0, 'X');
+      expect ( mockBoard.getStatus()).toEqual(undefined);
+    });
+  });
+
 }); // END DESCRIBE BOARD
