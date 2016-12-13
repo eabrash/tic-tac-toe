@@ -1,18 +1,27 @@
-module.exports = Game, Player, Board, ScoreBoard;
-
 
 var Game = function() {
-	this.winStatus = "";
-	this.board = new Board;
+	this.winStatus = "in progress";
+	// this.board = new Board;
 };
 
 Game.prototype.checkWinStatus = function() {
+	return this.winStatus;
+};
+
+Game.prototype.getCurrentPlayer = function() {
 
 };
 
-Game.prototype.trackTurns = function() {
+Game.prototype.setCurrentPlayer = function() {
 
 };
+
+Game.prototype.setPlayers = function(player1, player2) {
+	this.player1 = player1;
+	this.player2 = player2;
+	return [this.player1, this.player2];
+};
+
 
 var Player = function() {
 };
@@ -41,8 +50,16 @@ Player.prototype.getStatus = function() {
 	return this.status;
 };
 
-Board
+//Board
 
-ScoreBoard
+var Board = function() {
 
+};
 
+//ScoreBoard
+
+var ScoreBoard = function() {
+
+};
+
+module.exports = Game, Player, Board, ScoreBoard;
