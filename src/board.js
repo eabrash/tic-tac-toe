@@ -6,6 +6,7 @@ var Board = function() {
 	this.board = [[null, null, null],
 								[null, null, null],
 								[null, null, null]];
+	this.playCounter = 0;
 };
 
 Board.prototype.setMarkAtPosition = function(row, column, mark) {
@@ -13,6 +14,7 @@ Board.prototype.setMarkAtPosition = function(row, column, mark) {
 		throw "Try Again!";
 	} else {
 		this.board[row][column] = mark;
+		this.playCounter++;
 	};
 };
 
