@@ -9,10 +9,53 @@ describe("Game", function() {
   var testPlayerOne = "Sassa";
   var testPlayerTwo = "Emily";
 
+  it('should show that a game has a Board', function() {
+  	expect(Array.isArray(testGame.board.board)).toEqual(true);
+  });
+
 	describe('checkWinStatus', function(){
 
     it('should see if someone has won the game', function(){
       expect(testGame.checkWinStatus()).toEqual("in progress");
+    });
+
+    it('should report a full-board draw', function() {
+    	var testGame2 = new Game();
+    	testGame2.board.setMarkAtPosition(0,0, 'X');
+    	testGame2.board.setMarkAtPosition(0,1, 'O');
+    	testGame2.board.setMarkAtPosition(0,2, 'X');
+    	
+      testGame2.board.setMarkAtPosition(1,0, 'O');
+      testGame2.board.setMarkAtPosition(1,1, 'O');
+      testGame2.board.setMarkAtPosition(1,2, 'X');
+      
+      testGame2.board.setMarkAtPosition(2,0, 'X');
+      testGame2.board.setMarkAtPosition(2,1, 'X');
+      testGame2.board.setMarkAtPosition(2,2, 'O');
+
+      expect(testGame2.checkWinStatus()).toEqual("draw");
+    });
+
+    it('should report if someone won the game', function() {
+    	testGame.board.setMarkAtPosition(0,0, 'X');
+      testGame.board.setMarkAtPosition(1,1, 'X');
+      testGame.board.setMarkAtPosition(2,2, 'X');
+      
+      expect(testGame.checkWinStatus()).toEqual("X won!");
+    });
+
+
+    it('should report a full-board draw', function() {
+    	var testGame3 = new Game();
+    	testGame3.board.setMarkAtPosition(0,0, 'X');
+    	testGame3.board.setMarkAtPosition(0,1, 'O');
+    	testGame3.board.setMarkAtPosition(0,2, 'X');
+    	
+      testGame3.board.setMarkAtPosition(1,0, 'O');
+      testGame3.board.setMarkAtPosition(1,1, 'O');
+      testGame3.board.setMarkAtPosition(1,2, 'X');
+
+      expect(testGame3.checkWinStatus()).toEqual("in progress");
     });
 
   });
