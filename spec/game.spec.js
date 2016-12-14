@@ -6,8 +6,10 @@ import ScoreBoard from 'scoreboard';
 describe("Game", function() {
 
   var testGame = new Game();
-  var testPlayerOne = "Sassa";
-  var testPlayerTwo = "Emily";
+  var testPlayerOne = new Player();
+  testPlayerOne.setName("Sassa");
+  var testPlayerTwo = new Player();
+  testPlayerTwo.setName("Emily");
 
   // var testPlayerOne = "Sassa";
   // var testPlayerTwo = "Emily";
@@ -67,7 +69,7 @@ describe("Game", function() {
 
     it('should set current player and return the current player (set to Emily)', function(){
     	testGame.setCurrentPlayer(testPlayerTwo);
-      expect(testGame.getCurrentPlayer()).toEqual('Emily');
+      expect(testGame.getCurrentPlayer().name).toEqual('Emily');
     });
 
     it('setting the current player as nil should throw an error', function(){
@@ -79,12 +81,26 @@ describe("Game", function() {
   describe('setPlayers', function(){
 
     it('should accept arguments (currently strings, should later be Players)', function(){
-      expect(testGame.setPlayers(testPlayerOne, testPlayerTwo)).toEqual(["Sassa", "Emily"]);
+    	var result = testGame.setPlayers(testPlayerOne, testPlayerTwo);
+      expect(result[0].name).toEqual("Sassa");
+      expect(result[1].name).toEqual("Emily");
     });
 
   });
 
-});
+  describe('takeTurns', function() {
+  	it('should force players to take turns', function() {
+  		var testGame2 = new Game();
+    	testGame2.setPlayers(testPlayerOne, testPlayerTwo);
+    	testGame2.takeTurns(0,0);
+
+    	expect(testGame2.currentPlayer.name).toEqual("Emily");
+  	});
+
+  }); //END takeTurns
+
+
+}); // END Game
 
 describe("Player", function() {
 
