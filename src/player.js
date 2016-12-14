@@ -32,9 +32,15 @@ Player.prototype.getMark = function() {
 	return this.mark;
 };
 
+Player.prototype.setCurrentGame = function(game) {
+	this.currentGame = game;
+};
+
+
 //can't do until board is made
-Player.prototype.chooseSquare = function(board, row, column) {
-	board.setMarkAtPosition(row, column, this.mark);
+Player.prototype.chooseSquare = function(row, column) {
+	this.currentGame.board.setMarkAtPosition(row, column, this.mark);
+	// console.log(this.game.board.board);
 };
 
 // shows whether a player is active and can choose a square or not

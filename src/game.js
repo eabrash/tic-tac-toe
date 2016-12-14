@@ -36,11 +36,17 @@ Game.prototype.setPlayers = function(player1, player2) {
 	this.player2 = player2;
 	//player1 starts the game
 	this.setCurrentPlayer(player1);
+	player1.setMark("X");
+	player2.setMark("O");
+
+	player1.setCurrentGame(this);
+	player2.setCurrentGame(this);
+
 	return [this.player1, this.player2];
 };
 
 Game.prototype.takeTurns = function(row, col) {
-	this.currentPlayer.chooseSquare(this.board, row, col);
+	this.currentPlayer.chooseSquare(row, col);
 
 	if (this.currentPlayer == this.player1) {
 		this.currentPlayer = this.player2; 
@@ -48,6 +54,11 @@ Game.prototype.takeTurns = function(row, col) {
 		this.currentPlayer = this.player1;
 	};
 	
+	if (this.board.playCounter >= 6) {
+		console.log(this.checkWinStatus());
+
+	};
+	this.board.drawBoard();
 }; //END togglePlayer
 
 
