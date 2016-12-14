@@ -9,12 +9,12 @@ var Game = function() {
 Game.prototype.checkWinStatus = function() {
 	//will involve logic and Board and choosing Squares etc etc
 	if (this.board.getStatus() == "X" || this.board.getStatus() =="O") {
-		this.winStatus = this.board.getStatus(); 
-		return this.winStatus + " " + "won!";
+		this.winStatus = this.board.getStatus();
+		return ((this.winStatus == this.player1.getMark() ? this.player1.name : this.player2.name) + " " + "won!");
 	} else if (this.board.playCounter == 9) {
 		this.winStatus = "draw";
 	};
-	
+
 	return this.winStatus;
 }; // END checkWinStatus
 
@@ -49,12 +49,12 @@ Game.prototype.takeTurns = function(row, col) {
 	this.currentPlayer.chooseSquare(row, col);
 
 	if (this.currentPlayer == this.player1) {
-		this.currentPlayer = this.player2; 
+		this.currentPlayer = this.player2;
 	} else if (this.currentPlayer == this.player2 ) {
 		this.currentPlayer = this.player1;
 	};
-	
-	if (this.board.playCounter >= 6) {
+
+	if (this.board.playCounter >= 5) {
 		console.log(this.checkWinStatus());
 
 	};
@@ -63,4 +63,3 @@ Game.prototype.takeTurns = function(row, col) {
 
 
 export default Game;
-
