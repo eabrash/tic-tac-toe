@@ -106,5 +106,14 @@ Board.prototype.getStatus = function(){
 
 };
 
+Board.prototype.drawBoard = function() {
+	console.log(this.board[0]);
+	console.log("");
+	console.log(this.board[1]);
+	console.log("")
+	console.log(this.board[2]);
+	console.log("");
+};
+
 
 export default Board;
