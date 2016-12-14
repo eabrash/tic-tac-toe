@@ -39,14 +39,16 @@ Game.prototype.setPlayers = function(player1, player2) {
 	return [this.player1, this.player2];
 };
 
-Game.prototype.togglePlayer = function() {
+Game.prototype.takeTurns = function(row, col) {
+	this.currentPlayer.chooseSquare(this.board, row, col);
+
 	if (this.currentPlayer == this.player1) {
 		this.currentPlayer = this.player2; 
 	} else if (this.currentPlayer == this.player2 ) {
 		this.currentPlayer = this.player1;
 	};
 	
-} //END togglePlayer
+}; //END togglePlayer
 
 
 export default Game;
