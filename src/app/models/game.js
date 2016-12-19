@@ -41,11 +41,12 @@ const Game = Backbone.Model.extend({
         myBoard[row][col] = "O";
         this.set("board", myBoard);
       }
+      // console.log("Just set a board square");
       this.toggleCurrentPlayer();
       return true;
     }
   },
-  gameHasBeenWon: function(){
+  hasBeenWon: function(){
 
     var myBoard = this.get("board");
 
@@ -58,13 +59,13 @@ const Game = Backbone.Model.extend({
           }
         }
         // Check for row wins
-        if (column == 1){
+        if (col == 1){
           if(myBoard[row][col] != null && myBoard[row][col] == myBoard[row][col-1] && myBoard[row][col] == myBoard[row][col+1]){
             return myBoard[row][col];
           }
         }
         // Check for diagonal wins
-        if (row == 1 && column == 1){
+        if (row == 1 && col == 1){
           if((myBoard[row][col] != null && myBoard[row][col] == myBoard[row-1][col-1] && myBoard[row][col] == myBoard[row+1][col+1]) ||
              (myBoard[row][col] != null && myBoard[row][col] == myBoard[row+1][col-1] && myBoard[row][col] == myBoard[row-1][col+1])){
                return myBoard[row][col];
@@ -76,7 +77,7 @@ const Game = Backbone.Model.extend({
     //If we did not return, no wins were found
     return false;
   },
-  gameIsADraw: function(){
+  isADraw: function(){
     var numPlaysRemaining = 9;
     var myBoard = this.get("board");
 

@@ -19,7 +19,7 @@ const ApplicationView = Backbone.View.extend({
     console.log("Players: " + this.player1 + ", " + this.player2);
 
     this.game = new Game({"players": [this.player1, this.player2]});
-
+    this.render();
     // this.$('.board').show();
   },
 
