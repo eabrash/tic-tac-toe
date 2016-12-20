@@ -1,11 +1,13 @@
 import Backbone from 'backbone';
 import Game from 'app/models/game';
 import GameView from 'app/views/game_view';
+import GamesList from 'app/collections/games'
 
 const ApplicationView = Backbone.View.extend({
   initialize: function(options) {
     this.render();
-    this.listOfGames = options.previousGames;
+    this.listOfGames = new GamesList();
+    this.listenTo(this.listOfGames, 'update', this.render);
   },
 
   events: {
@@ -25,11 +27,33 @@ const ApplicationView = Backbone.View.extend({
 
   render: function() {
     if (this.game != undefined){
-      var gameView = new GameView({model: this.game, el: this.$("#board")});
+      this.gameView = new GameView({model: this.game, el: this.$("#board")});
+      this.listenTo(this.gameView, 'game-over', this.addGameToList);
       this.$("#board").show();
-      gameView.render();
+      this.gameView.render();
+      var that = this;
+      that.$("#top-scorers").empty();
+      this.listOfGames.each(function(model){
+        that.$("#top-scorers").prepend("<li>" + model.attributes.player1 + " vs. " + model.attributes.player2 + "</li>");
+      });
     }
+  },
+
+  addGameToList: function(game) {
+    console.log("I WAS CALLED");
+    // console.log("GAME IS: ");
+    // console.log(game);
+    this.listOfGames.add(game);
+    console.log("listOfGames length: " + this.listOfGames.length);
+    // console.log(this.listOfGames);
+    // var counter = 0;
+    // this.listOfGames.each(function(model){
+    //   console.log(counter);
+    //   console.log(model.attributes.player1);
+    //   counter++;
+    // });
   }
+
 });
 
 export default ApplicationView;

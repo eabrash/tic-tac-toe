@@ -12,10 +12,10 @@ const GameView = Backbone.View.extend({
   },
 
   clickTile: function(e){
-    console.log("Tile clicked");
+    // console.log("Tile clicked");
     if (this.model.hasBeenWon() == false && this.model.isADraw() == false){
       var square = e.currentTarget.id;
-      console.log(e.currentTarget.id + ", row: " + Math.floor(square/3) + ", column: " + square%3);
+      // console.log(e.currentTarget.id + ", row: " + Math.floor(square/3) + ", column: " + square%3);
       this.model.setSquare(Math.floor(square/3),square%3);
       this.render();
     }
@@ -34,12 +34,16 @@ const GameView = Backbone.View.extend({
       } else {
         this.$("#player-prompt").html(this.model.get("player2") + " has won! Great game!");
       }
+      console.log("HERE1");
+      this.trigger('game-over', this.model);
     } else if (this.model.isADraw()) {
+      console.log("HERE2");
       this.$("#player-prompt").html("It's a draw! Great game, both of you!");
+      this.trigger('game-over', this.model);
     }
 
     for(var square = 0; square < 9; square++){
-      console.log(this.$("#" + square.toString()));
+      // console.log(this.$("#" + square.toString()));
       this.$("#" + square.toString() + " > h3").html(this.model.get("board")[Math.floor(square/3)][square%3]);
     }
     //
