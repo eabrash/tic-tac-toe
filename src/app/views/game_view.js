@@ -13,9 +13,8 @@ const GameView = Backbone.View.extend({
 
   clickTile: function(e){
     // console.log("Tile clicked");
-    if (this.model.hasBeenWon() == false && this.model.isADraw() == false){
+    if (this.model.get("outcome") == "in progress"){
       var square = e.currentTarget.id;
-      // console.log(e.currentTarget.id + ", row: " + Math.floor(square/3) + ", column: " + square%3);
       this.model.setSquare(Math.floor(square/3),square%3);
       if (this.model.get("outcome") == "in progress"){
         this.model.isADraw();

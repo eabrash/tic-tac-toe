@@ -22,10 +22,20 @@ const ApplicationView = Backbone.View.extend({
     console.log("Players: " + player1 + ", " + player2);
 
     console.log("Making a new game...");
-    this.game = new Game({"players": [player1, player2]});
-    this.game.pickStartingPlayer();
+    if (player1 == "" || player2 == ""){
+      this.$('#error').html("Please enter a name for both players!")
+    } else {
+      this.game = new Game({"players": [player1, player2]});
+      this.game.pickStartingPlayer();
+      this.$('#error').empty();
+    }
     this.render();
     // this.$('.board').show();
+  },
+
+  // Hashtable info: http://www.mojavelinux.com/articles/javascript_hashes.html
+  getTopScorers: function(){
+    return this.listOfGames.upToTopN(10);
   },
 
   render: function() {
@@ -35,11 +45,11 @@ const ApplicationView = Backbone.View.extend({
       this.$("#board").show();
       this.gameView.render();
     }
-    var that = this;
-    that.$("#top-scorers").empty();
-    this.listOfGames.each(function(model){
-      that.$("#top-scorers").prepend("<li>" + model.get("players")[0] + " vs. " + model.get("players")[1] + "</li>");
-    });
+    this.$("#top-scorers").empty();
+    var topScorers = this.getTopScorers();
+    for (var i = 0; i < topScorers.length; i++){
+      this.$("#top-scorers").append("<li>" + topScorers[i]["name"] + "</li>");
+    }
   },
 
   addGameToList: function(game) {

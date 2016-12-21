@@ -98,6 +98,11 @@ const Game = Backbone.Model.extend({
     return false;
   },
   isADraw: function(){
+
+    if (this.get("outcome") == "X" || this.get("outcome") == "O"){
+      return false;
+    }
+
     var numPlaysRemaining = 9;
     var myBoard = this.get("board");
 
