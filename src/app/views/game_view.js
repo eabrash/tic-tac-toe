@@ -17,52 +17,38 @@ const GameView = Backbone.View.extend({
       var square = e.currentTarget.id;
       // console.log(e.currentTarget.id + ", row: " + Math.floor(square/3) + ", column: " + square%3);
       this.model.setSquare(Math.floor(square/3),square%3);
+      if (this.model.get("outcome") == "in progress"){
+        this.model.isADraw();
+        this.model.hasBeenWon();
+        if (this.model.get("outcome") != "in progress"){
+          this.trigger('game-over', this.model);
+        }
+      }
       this.render();
     }
   },
   render: function(){
-    if (this.model.hasBeenWon() == false && this.model.isADraw() == false) {
-      if (this.model.get("currentPlayer") == this.model.get("player1")) {
+    if (this.model.get("outcome") == "in progress") {
+      if (this.model.currentPlayer() == this.model.get("players")[0]) {
         var symbol = "X";
       } else {
         var symbol = "O";
       }
-      this.$("#player-prompt").html(this.model.get("currentPlayer") + ", make your move! (" +  symbol + ")");
-    } else if (this.model.hasBeenWon() != false) {
-      if (this.model.hasBeenWon() == 'X') {
-        this.$("#player-prompt").html(this.model.get("player1") + " has won! Great game!");
+      this.$("#player-prompt").html(this.model.currentPlayer() + ", make your move! (" +  symbol + ")");
+    } else if (this.model.get("outcome") == "X" || this.model.get("outcome") == "O" ) {
+      if (this.model.get("outcome") == 'X') {
+        this.$("#player-prompt").html(this.model.get("players")[0] + " has won! Great game!");
       } else {
-        this.$("#player-prompt").html(this.model.get("player2") + " has won! Great game!");
+        this.$("#player-prompt").html(this.model.get("players")[1] + " has won! Great game!");
       }
-      console.log("HERE1");
-      this.trigger('game-over', this.model);
-    } else if (this.model.isADraw()) {
-      console.log("HERE2");
+    } else if (this.model.get("outcome")) {
       this.$("#player-prompt").html("It's a draw! Great game, both of you!");
-      this.trigger('game-over', this.model);
     }
 
     for(var square = 0; square < 9; square++){
       // console.log(this.$("#" + square.toString()));
-      this.$("#" + square.toString() + " > h3").html(this.model.get("board")[Math.floor(square/3)][square%3]);
+      this.$("#" + square.toString() + " > h3").html(this.model.get("board")[square]);
     }
-    //
-    // <tr>
-    //   <td><h3></h3></td>
-    //   <td><h3></h3></td>
-    //   <td><h3></h3></td>
-    // </tr>
-    // <tr>
-    //   <td><h3></h3></td>
-    //   <td><h3></h3></td>
-    //   <td><h3></h3></td>
-    // </tr>
-    // <tr>
-    //   <td><h3></h3></td>
-    //   <td><h3></h3></td>
-    //   <td><h3></h3></td>
-    // </tr>
-    // this.$el.removeClass("hidden");
   }
 
 });

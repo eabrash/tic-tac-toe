@@ -1,48 +1,65 @@
 import Backbone from 'backbone';
 
 const Game = Backbone.Model.extend({
-
+  // Why this needs to be a function (defaults is shared among all instances in a not-useful way and attributes such as board will
+  // not be reset otherwise): http://stackoverflow.com/questions/19441176/backbone-new-view-reflects-old-model-data
+  defaults: function() {
+    return {players: ["Player1", "Player2"],
+    board: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+    outcome: "in progress"};
+  },
   initialize: function(options) {
+    // console.log("This is the new Game:");
+    // console.log(this);
+  },
+  pickStartingPlayer: function() {
     // Randomly choose which player will go first (X player) and which will go second (O player)
     var randomNumber = Math.floor(Math.random()*2);
+    var myPlayers = this.get("players");
 
     if (randomNumber == 0){
-      this.set("player1", options.players[0]);  // X player
-      this.set("player2", options.players[1]);  // O player
-    } else {
-      this.set("player1", options.players[1]);  // X player
-      this.set("player2", options.players[0]); // O player
-    }
-
-    this.set("board", [[null, null, null],
-                       [null, null, null],
-                       [null, null, null]]);
-
-    this.set("status", "in progress");
-    this.set("currentPlayer", this.get("player1"));
-  },
-  toggleCurrentPlayer: function() {
-    if (this.get("currentPlayer") == this.get("player1")){
-      this.set("currentPlayer", this.get("player2"));
-    } else {
-      this.set("currentPlayer", this.get("player1"));
+      this.set("players", [myPlayers[1], myPlayers[0]]); // Reverse order of players
     }
   },
+  currentPlayer: function() {
+    var numMarks = 0;
+    var myBoard = this.get("board");
+
+    for (var row = 0; row < 3; row++){
+      for (var col = 0; col < 3; col++){
+        if (myBoard[row * 3 + col] != " "){
+          numMarks++;
+        }
+      }
+    }
+
+    if (numMarks % 2 == 0){
+      return this.get("players")[0];
+    } else {
+      return this.get("players")[1];
+    }
+  },
+  // toggleCurrentPlayer: function() {
+  //   if (this.get("currentPlayer") == this.get("player1")){
+  //     this.set("currentPlayer", this.get("player2"));
+  //   } else {
+  //     this.set("currentPlayer", this.get("player1"));
+  //   }
+  // },
   setSquare: function(row, col){
-    if (this.get("board")[row][col] != null){
+    if (this.get("board")[row * 3 + col] != " "){
       return false;   // Something is already in the selected spot
     } else {
-      if (this.get("currentPlayer") == this.get("player1")){
+      if (this.currentPlayer() == this.get("players")[0]){
         var myBoard = this.get("board");
-        myBoard[row][col] = "X";
+        myBoard[row * 3 + col] = "X";
         this.set("board", myBoard);
       } else {
         var myBoard = this.get("board");
-        myBoard[row][col] = "O";
+        myBoard[row * 3 + col] = "O";
         this.set("board", myBoard);
       }
       // console.log("Just set a board square");
-      this.toggleCurrentPlayer();
       return true;
     }
   },
@@ -54,21 +71,24 @@ const Game = Backbone.Model.extend({
       for (var col = 0; col < 3; col++){
         // Check for column wins
         if (row == 1){
-          if (myBoard[row][col] != null && myBoard[row][col] == myBoard[row-1][col] && myBoard[row][col] == myBoard[row+1][col]){
-            return myBoard[row][col];
+          if (myBoard[row * 3 + col] != " " && myBoard[row * 3 + col] == myBoard[(row-1) * 3 + col] && myBoard[row * 3 + col] == myBoard[(row+1) * 3 + col]){
+            this.set("outcome", myBoard[row * 3 + col]);
+            return myBoard[row * 3 + col];
           }
         }
         // Check for row wins
         if (col == 1){
-          if(myBoard[row][col] != null && myBoard[row][col] == myBoard[row][col-1] && myBoard[row][col] == myBoard[row][col+1]){
-            return myBoard[row][col];
+          if(myBoard[row * 3 + col] != " " && myBoard[row * 3 + col] == myBoard[row * 3 + col-1] && myBoard[row * 3 + col] == myBoard[row * 3 + col+1]){
+            this.set("outcome", myBoard[row * 3 + col]);
+            return myBoard[row * 3 + col];
           }
         }
         // Check for diagonal wins
         if (row == 1 && col == 1){
-          if((myBoard[row][col] != null && myBoard[row][col] == myBoard[row-1][col-1] && myBoard[row][col] == myBoard[row+1][col+1]) ||
-             (myBoard[row][col] != null && myBoard[row][col] == myBoard[row+1][col-1] && myBoard[row][col] == myBoard[row-1][col+1])){
-               return myBoard[row][col];
+          if((myBoard[row * 3 + col] != " " && myBoard[row * 3 + col] == myBoard[(row-1) * 3 + col-1] && myBoard[row * 3 + col] == myBoard[(row+1) * 3 + col+1]) ||
+             (myBoard[row * 3 + col] != " " && myBoard[row * 3 + col] == myBoard[(row+1) * 3 + col-1] && myBoard[row * 3 + col] == myBoard[(row-1) + col+1])){
+               this.set("outcome", myBoard[row * 3 + col]);
+               return myBoard[row * 3 + col];
           }
         }
       }
@@ -83,7 +103,7 @@ const Game = Backbone.Model.extend({
 
     for (var row = 0; row < 3; row++){
       for (var col = 0; col < 3; col++){
-        if (myBoard[row][col] != null){
+        if (myBoard[row * 3 + col] != " "){
           numPlaysRemaining--;
         }
       }
@@ -96,6 +116,10 @@ const Game = Backbone.Model.extend({
     //   var remainingX = Math.floor(numPlaysRemaining/2) + 1;
     //   var remainingO = Math.floor(numPlaysRemaining/2);
     // }
+
+    if (numPlaysRemaining == 0){
+      this.set("outcome", "draw");
+    }
 
     return numPlaysRemaining == 0;  // For now, consider it a draw only when all spaces are full
   }
