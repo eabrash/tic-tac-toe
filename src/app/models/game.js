@@ -39,16 +39,9 @@ const Game = Backbone.Model.extend({
       return this.get("players")[1];
     }
   },
-  // toggleCurrentPlayer: function() {
-  //   if (this.get("currentPlayer") == this.get("player1")){
-  //     this.set("currentPlayer", this.get("player2"));
-  //   } else {
-  //     this.set("currentPlayer", this.get("player1"));
-  //   }
-  // },
   setSquare: function(row, col){
-    if (this.get("board")[row * 3 + col] != " "){
-      return false;   // Something is already in the selected spot
+    if (this.get("board")[row * 3 + col] != " " || row > 2 || col > 2 || row < 0 || col < 0){
+      return false;   // Something is already in the selected spot, or the spot is not on the board
     } else {
       if (this.currentPlayer() == this.get("players")[0]){
         var myBoard = this.get("board");

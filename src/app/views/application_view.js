@@ -30,7 +30,6 @@ const ApplicationView = Backbone.View.extend({
       this.$('#error').empty();
     }
     this.render();
-    // this.$('.board').show();
   },
 
   // Hashtable info: http://www.mojavelinux.com/articles/javascript_hashes.html
