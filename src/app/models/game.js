@@ -9,8 +9,7 @@ const Game = Backbone.Model.extend({
     outcome: "in progress"};
   },
   initialize: function(options) {
-    // console.log("This is the new Game:");
-    // console.log(this);
+
   },
   pickStartingPlayer: function() {
     // Randomly choose which player will go first (X player) and which will go second (O player)
@@ -52,7 +51,7 @@ const Game = Backbone.Model.extend({
         myBoard[row * 3 + col] = "O";
         this.set("board", myBoard);
       }
-      // console.log("Just set a board square");
+
       return true;
     }
   },
@@ -106,14 +105,6 @@ const Game = Backbone.Model.extend({
         }
       }
     }
-
-    // if (numPlaysRemaining % 2 == 0){
-    //   var remainingX = Math.floor(numPlaysRemaining/2);
-    //   var remainingO = Math.floor(numPlaysRemaining/2);
-    // } else {
-    //   var remainingX = Math.floor(numPlaysRemaining/2) + 1;
-    //   var remainingO = Math.floor(numPlaysRemaining/2);
-    // }
 
     if (numPlaysRemaining == 0){
       this.set("outcome", "draw");

@@ -48,7 +48,6 @@ const GamesList = Backbone.Collection.extend({
     // Next, we take the hashtable and convert it into an array of small objects, each of which
     // stores a name and a score. This conversion facilitates sorting of the players by score.
 
-    // console.log(playersAndTheirWins);
     var arrayOfScoreObjects = [];
 
     // Documentation of getOwnPropertyNames:
@@ -62,18 +61,12 @@ const GamesList = Backbone.Collection.extend({
       arrayOfScoreObjects.push(miniObject);
     }
 
-    // console.log("Array of objects:");
-    // console.log(arrayOfScoreObjects);
-
     // Sort the players by score in descending order
     // Sort based on: http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects
 
     var sorted = arrayOfScoreObjects.sort(function(a, b) {
       return parseFloat(b.score) - parseFloat(a.score);
     })
-
-    // console.log("Sorted array of objects:");
-    // console.log(sorted);
 
     var max = Math.min(n, sorted.length);
 

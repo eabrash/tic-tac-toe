@@ -12,7 +12,6 @@ const GameView = Backbone.View.extend({
   },
 
   clickTile: function(e){
-    // console.log("Tile clicked");
     if (this.model.get("outcome") == "in progress"){
       var square = e.currentTarget.id;
       this.model.setSquare(Math.floor(square/3),square%3);
@@ -20,6 +19,7 @@ const GameView = Backbone.View.extend({
         this.model.isADraw();
         this.model.hasBeenWon();
         if (this.model.get("outcome") != "in progress"){
+          this.render();
           this.trigger('game-over', this.model);
         }
       }
@@ -45,7 +45,6 @@ const GameView = Backbone.View.extend({
     }
 
     for(var square = 0; square < 9; square++){
-      // console.log(this.$("#" + square.toString()));
       this.$("#" + square.toString() + " > h3").html(this.model.get("board")[square]);
     }
   }
